@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LDB Filmes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAFAF7;
+  --text: #0A0A0A;
+  --muted: #6B6B6B;
+  --line: #E5E3DD;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-weight: 400; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 22px 32px; mix-blend-mode: difference; }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: white; font-style: italic; }
+.nav-tabs { display: flex; gap: 28px; }
+.nav-tab { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.65); cursor: pointer; transition: color 0.2s; }
+.nav-tab:hover, .nav-tab.active { color: white; }
+
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* HERO */
+.hero { padding: 140px 32px 40px; max-width: 1400px; margin: 0 auto; }
+.hero-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 7vw, 92px); line-height: 1; font-weight: 300; letter-spacing: -0.02em; max-width: 900px; }
+.hero-headline em { font-style: italic; color: var(--muted); }
+.hero-sub { margin-top: 32px; font-size: 15px; line-height: 1.65; color: var(--muted); max-width: 540px; }
+
+/* WORK GRID — efeito Wanda */
+.work-section { padding: 60px 32px 120px; max-width: 1400px; margin: 0 auto; }
+.work-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; display: flex; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+
+/* Grid principal */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 14px;
+  transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.work-item {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: #000;
+  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  grid-column: span 2;
+}
+
+/* Quando algum item está em hover, os outros encolhem */
+.work-grid:hover .work-item:not(:hover) {
+  opacity: 0.45;
+  transform: scale(0.98);
+}
+.work-item:hover {
+  transform: scale(1.015);
+  z-index: 2;
+}
+
+/* Iframe do Vimeo no estilo background — cobre todo o espaço */
+.video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.78vh;   /* 16/9 ratio baseado em altura */
+  min-width: 100%;
+  height: 56.25vw;   /* 9/16 ratio baseado em largura */
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.video-bg iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Overlay com info do vídeo */
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.7) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 22px;
+  z-index: 3;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.work-info { color: white; }
+.work-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; line-height: 1.1; margin-bottom: 4px; }
+.work-title em { font-style: italic; opacity: 0.7; }
+.work-meta { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+
+/* Play icon ao hover */
+.play-circle {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 64px; height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 3;
+  pointer-events: none;
+}
+.work-item:hover .play-circle { opacity: 1; transform: scale(1); }
+.play-circle svg { width: 22px; height: 22px; margin-left: 4px; }
+
+/* LIGHTBOX para abrir vídeo grande */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: fadeIn 0.3s ease;
+}
+.lightbox.open { display: flex; }
+.lightbox-content {
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16/9;
+  position: relative;
+}
+.lightbox-content iframe { width: 100%; height: 100%; border: none; }
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+}
+
+/* INTRO */
+.intro-section { padding: 100px 32px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.intro-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: start; }
+.intro-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.intro-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.4; font-weight: 300; }
+.intro-text strong { font-style: italic; font-weight: 400; }
+
+/* CTA */
+.cta-section { padding: 140px 32px; text-align: center; max-width: 1400px; margin: 0 auto; }
+.cta-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 6vw, 68px); line-height: 1.1; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 40px; }
+.cta-headline em { font-style: italic; color: var(--muted); }
+.cta-btn { display: inline-flex; align-items: center; gap: 12px; background: var(--text); color: white; border: none; padding: 18px 40px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+.cta-btn:hover { opacity: 0.85; }
+.cta-btn svg { width: 14px; height: 14px; }
+
+.footer { padding: 40px 32px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+/* ── PROPOSTA ── */
+.prop-hero { padding: 140px 32px 60px; max-width: 900px; margin: 0 auto; }
+.prop-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px,6vw,72px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; }
+.prop-title em { font-style: italic; color: var(--muted); }
+.prop-sub { margin-top: 24px; font-size: 14px; color: var(--muted); }
+.prop-wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 120px; }
+.sec-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 56px 0 24px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.sec-label:first-child { margin-top: 0; }
+
+.pkg-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.pkg-card { background: white; border: 1px solid var(--line); padding: 32px 26px; cursor: pointer; transition: border-color 0.2s, transform 0.2s; position: relative; }
+.pkg-card:hover { border-color: var(--text); transform: translateY(-2px); }
+.pkg-card.sel { border-color: var(--text); border-width: 1.5px; background: #F4F2EC; }
+.pkg-badge { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.pkg-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.01em; line-height: 1; margin-bottom: 8px; }
+.pkg-price { font-size: 16px; color: var(--text); margin-bottom: 20px; font-weight: 500; }
+.pkg-vcols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pkg-vcols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.pkg-vcols-2x2 { grid-template-columns: 1fr 1fr; }
+.pkg-vcol-head { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.pkg-vcol-val { font-size: 13px; color: var(--text); }
+.pkg-items { list-style: none; font-size: 13px; line-height: 1.9; }
+.pkg-items li { padding-left: 14px; position: relative; }
+.pkg-items li::before { content: '·'; position: absolute; left: 4px; color: var(--muted); }
+.check-icon { position: absolute; top: 18px; right: 18px; width: 22px; height: 22px; border-radius: 50%; background: var(--text); display: none; align-items: center; justify-content: center; }
+.pkg-card.sel .check-icon { display: flex; }
+
+.extras-wrap { background: white; border: 1px solid var(--line); margin-top: 8px; }
+.extra-row { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid var(--line); gap: 16px; }
+.extra-row:last-child { border-bottom: none; }
+.extra-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.extra-desc { font-size: 12px; color: var(--muted); }
+.extra-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.extra-price { font-size: 14px; color: var(--muted); }
+.toggle { width: 42px; height: 24px; border-radius: 12px; background: #E0DDD6; position: relative; cursor: pointer; transition: background 0.2s; border: none; }
+.toggle.on { background: var(--text); }
+.toggle::after { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; top: 3px; left: 3px; transition: left 0.2s; }
+.toggle.on::after { left: 21px; }
+
+.total-wrap { background: var(--text); color: white; padding: 36px 32px; margin-top: 12px; }
+.sum-row { display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0; }
+.sum-row span:first-child { color: rgba(255,255,255,0.6); }
+.sum-empty { font-size: 14px; color: rgba(255,255,255,0.4); font-style: italic; }
+.total-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 20px 0; }
+.total-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+.total-value { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; line-height: 1; letter-spacing: -0.01em; }
+.total-vista { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 10px; }
+
+.info-block { margin-top: 56px; }
+.info-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; margin-bottom: 16px; }
+.info-text { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 8px; }
+
+.send-btn { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 32px; background: var(--text); color: white; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; padding: 22px; border: none; cursor: pointer; width: 100%; transition: opacity 0.2s; font-weight: 500; }
+.send-btn:hover { opacity: 0.88; }
+
+@media (max-width: 900px) {
+  .work-grid { grid-template-columns: 1fr; }
+  .work-item { grid-column: span 1; }
+  .work-grid:hover .work-item:not(:hover) { opacity: 1; transform: scale(1); }
+  .intro-grid { grid-template-columns: 1fr; gap: 24px; }
+  .nav { padding: 18px 20px; }
+  .nav-tabs { gap: 16px; }
+  .hero, .work-section, .prop-wrap, .cta-section { padding-left: 20px; padding-right: 20px; }
+  .pkg-cards { grid-template-columns: 1fr; }
+  .lightbox { padding: 20px; }
+  .lightbox-close { top: -36px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">LDB Filmes</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="goPage('portfolio')">Work</div>
+    <div class="nav-tab" onclick="goPage('proposta')">Proposal</div>
+  </div>
+</nav>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()">CLOSE ×</button>
+    <iframe id="lightbox-iframe" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="page active" id="page-portfolio">
+
+  <section class="hero">
+    <h1 class="hero-headline">Filmmakers <em>capturing</em><br>love stories<br>since 2018.</h1>
+    <p class="hero-sub">LDB Filmes é uma produtora de cinematografia de casamento sediada em Londrina. Filmamos com olhar autoral, narrativa cinematográfica e o compromisso de eternizar o que há de mais genuíno em cada relacionamento.</p>
+  </section>
+
+  <section class="work-section">
+    <div class="work-label">
+      <span>Selected Work · 2024–2027</span>
+      <span>04 projects</span>
+    </div>
+
+    <div class="work-grid">
+
+      <div class="work-item" onclick="openLightbox('1179569982')">
+        <div class="video-bg">
+          <iframe src="https://player.vimeo.com/video/1179569982?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
+        </div>
+        <div class="play-circle">
+          <svg viewBox="0 0 22 22" fill="none"><polygon points="6,3 18,11 6,19" fill="#0A0A0A"/></svg>
+        </div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <div class="work-title">Pré-casamento <em>· ensaio</em></div>
+            <div class="work-meta">Pre-wedding film</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item" onclick="openLightbox('1156957347')">
+        <div class="video-bg">
+          <iframe src="https://player.vimeo.com/video/1156957347?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
+        </div>
+        <div class="play-circle">
+          <svg viewBox="0 0 22 22" fill="none"><polygon points="6,3 18,11 6,19" fill="#0A0A0A"/></svg>
+        </div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <div class="work-title">Teaser</div>
+            <div class="work-meta">Highlight · até 02:00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item" onclick="openLightbox('1161886240')">
+        <div class="video-bg">
+          <iframe src="https://player.vimeo.com/video/1161886240?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
+        </div>
+        <div class="play-circle">
+          <svg viewBox="0 0 22 22" fill="none"><polygon points="6,3 18,11 6,19" fill="#0A0A0A"/></svg>
+        </div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <div class="work-title">Sameday Edit</div>
+            <div class="work-meta">Live edit · no evento</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item" onclick="openLightbox('1172689760')">
+        <div class="video-bg">
+          <iframe src="https://player.vimeo.com/video/1172689760?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
+        </div>
+        <div class="play-circle">
+          <svg viewBox="0 0 22 22" fill="none"><polygon points="6,3 18,11 6,19" fill="#0A0A0A"/></svg>
+        </div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <div class="work-title">Filme <em>· história completa</em></div>
+            <div class="work-meta">Feature film · 06–15min</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="intro-grid">
+      <div class="intro-label">About — Lucas</div>
+      <p class="intro-text">
+        Cada casal tem uma história única — <strong>sou o Lucas da LDB</strong>, e há anos registro casamentos com o propósito de capturar o que há de mais genuíno em cada relacionamento: os detalhes e a essência de quem vocês são juntos.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2 class="cta-headline">Vamos <em>conversar</em><br>sobre o seu dia.</h2>
+    <button class="cta-btn" onclick="goPage('proposta')">
+      Ver planos de investimento
+      <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </section>
+
+  <div class="footer">
+    <span>LDB Filmes © 2027</span>
+    <span>+55 43 99182-9933</span>
+  </div>
+</div>
+
+<!-- PROPOSTA -->
+<div class="page" id="page-proposta">
+
+  <section class="prop-hero">
+    <h1 class="prop-title">Plans <em>·</em> Investment.</h1>
+    <p class="prop-sub">Selecione um pacote e os adicionais. O valor total atualiza automaticamente.</p>
+  </section>
+
+  <div class="prop-wrap">
+
+    <div class="sec-label">Packages</div>
+
+    <div class="pkg-cards">
+
+      <div class="pkg-card" id="video-1" onclick="selVideo(1)">
+        <div class="check-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="pkg-badge">Referência</div>
+        <div class="pkg-name">Lumiere</div>
+        <div class="pkg-price">R$ 5.000</div>
+        <div class="pkg-vcols">
+          <div><div class="pkg-vcol-head">Teaser</div><div class="pkg-vcol-val">até 2 min</div></div>
+          <div><div class="pkg-vcol-head">Film</div><div class="pkg-vcol-val">6–15 min</div></div>
+        </div>
+        <ul class="pkg-items"><li>2 videomakers</li><li>até 8 horas</li></ul>
+      </div>
+
+      <div class="pkg-card" id="video-2" onclick="selVideo(2)">
+        <div class="check-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="pkg-badge">Mais escolhido</div>
+        <div class="pkg-name">Copolla</div>
+        <div class="pkg-price">R$ 5.800</div>
+        <div class="pkg-vcols pkg-vcols-3">
+          <div><div class="pkg-vcol-head">Teaser</div><div class="pkg-vcol-val">até 2 min</div></div>
+          <div><div class="pkg-vcol-head">Film</div><div class="pkg-vcol-val">6–15 min</div></div>
+          <div><div class="pkg-vcol-head">Pré</div><div class="pkg-vcol-val">1–3 min</div></div>
+        </div>
+        <ul class="pkg-items"><li>2 videomakers</li><li>até 9 horas</li></ul>
+      </div>
+
+      <div class="pkg-card" id="video-3" onclick="selVideo(3)">
+        <div class="check-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="pkg-badge">Premium</div>
+        <div class="pkg-name">Villeneuve</div>
+        <div class="pkg-price">R$ 7.000</div>
+        <div class="pkg-vcols pkg-vcols-2x2">
+          <div><div class="pkg-vcol-head">Teaser</div><div class="pkg-vcol-val">até 2 min</div></div>
+          <div><div class="pkg-vcol-head">Film</div><div class="pkg-vcol-val">6–15 min</div></div>
+          <div><div class="pkg-vcol-head">Pré</div><div class="pkg-vcol-val">1–3 min</div></div>
+          <div><div class="pkg-vcol-head">Sameday</div><div class="pkg-vcol-val">no evento</div></div>
+        </div>
+        <ul class="pkg-items"><li>2 videomakers</li><li>até 9 horas</li></ul>
+      </div>
+
+    </div>
+
+    <div class="sec-label">Add-ons</div>
+    <div class="extras-wrap">
+      <div class="extra-row">
+        <div><div class="extra-name">Sameday Edit</div><div class="extra-desc">Vídeo editado no próprio dia do evento</div></div>
+        <div class="extra-right"><span class="extra-price">R$ 1.800</span><button class="toggle" id="t-sameday" onclick="togEx('sameday',1800)"></button></div>
+      </div>
+      <div class="extra-row">
+        <div><div class="extra-name">Íntegra da cerimônia</div><div class="extra-desc">Filme completo sem cortes</div></div>
+        <div class="extra-right"><span class="extra-price">R$ 1.800</span><button class="toggle" id="t-integra" onclick="togEx('integra',1800)"></button></div>
+      </div>
+      <div class="extra-row">
+        <div><div class="extra-name">Profissional extra</div><div class="extra-desc">Cinegrafista adicional</div></div>
+        <div class="extra-right"><span class="extra-price">R$ 800</span><button class="toggle" id="t-prof" onclick="togEx('prof',800)"></button></div>
+      </div>
+    </div>
+
+    <div class="total-wrap">
+      <div id="sum-lines"><p class="sum-empty">Selecione um pacote acima.</p></div>
+      <div class="total-divider"></div>
+      <div class="total-label">Total</div>
+      <div class="total-value" id="total-val">R$ —</div>
+      <div class="total-vista" id="total-vista"></div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-title">Formas de pagamento</div>
+      <p class="info-text">Cartão de crédito em até 6x sem juros.</p>
+      <p class="info-text">Sinal de 30% para reserva, restante em parcelas até a data do casamento.</p>
+      <p class="info-text" style="color:var(--text);margin-top:14px;">10% off para pagamento à vista na assinatura.</p>
+    </div>
+
+    <button class="send-btn" onclick="enviarWhatsApp()">
+      Quero contratar pelo WhatsApp
+      <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:14px;">Proposta válida por 15 dias.</p>
+  </div>
+
+  <div class="footer">
+    <span>LDB Filmes © 2027</span>
+    <span>+55 43 99182-9933</span>
+  </div>
+</div>
+
+<script>
+function goPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+id).classList.add('active');
+  var map={portfolio:0,proposta:1};
+  document.querySelectorAll('.nav-tab')[map[id]].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// LIGHTBOX
+function openLightbox(videoId){
+  var iframe = document.getElementById('lightbox-iframe');
+  iframe.src = 'https://player.vimeo.com/video/'+videoId+'?autoplay=1';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox-iframe').src = '';
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e){
+  if(e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeLightbox();
+});
+
+// PROPOSTA
+var vSel=0;
+var vP=[0,5000,5800,7000];
+var vN=['','Lumiere','Copolla','Villeneuve'];
+var ex={};
+var exN={sameday:'Sameday Edit',integra:'Íntegra',prof:'Profissional extra'};
+function selVideo(n){vSel=vSel===n?0:n;[1,2,3].forEach(function(i){document.getElementById('video-'+i).classList.toggle('sel',vSel===i);});upd();}
+function togEx(k,v){if(ex[k]){delete ex[k];document.getElementById('t-'+k).classList.remove('on');}else{ex[k]=v;document.getElementById('t-'+k).classList.add('on');}upd();}
+function fmt(n){return 'R$ '+n.toLocaleString('pt-BR');}
+function upd(){
+  var v=vP[vSel]||0,et=0;
+  Object.keys(ex).forEach(function(k){et+=ex[k];});
+  var total=v+et;
+  var html='';
+  if(v) html+='<div class="sum-row"><span>'+vN[vSel]+'</span><span>'+fmt(vP[vSel])+'</span></div>';
+  Object.keys(ex).forEach(function(k){html+='<div class="sum-row"><span>'+exN[k]+'</span><span>'+fmt(ex[k])+'</span></div>';});
+  if(!html) html='<p class="sum-empty">Selecione um pacote acima.</p>';
+  document.getElementById('sum-lines').innerHTML=html;
+  document.getElementById('total-val').textContent=total?fmt(total):'R$ —';
+  document.getElementById('total-vista').textContent=total?fmt(Math.round(total*0.9))+' à vista (10% off)':'';
+}
+function enviarWhatsApp(){
+  var v=vP[vSel]||0,et=0;
+  Object.keys(ex).forEach(function(k){et+=ex[k];});
+  var total=v+et;
+  var msg='🎬 *Olá, vim do site da LDB Filmes!*\n\n';
+  msg+='Tenho interesse na seguinte proposta:\n\n';
+  if(vSel) msg+='*Pacote:* '+vN[vSel]+' — '+fmt(vP[vSel])+'\n';
+  else msg+='_Ainda quero conversar sobre os pacotes._\n';
+  if(Object.keys(ex).length){msg+='\n*Adicionais:*\n';Object.keys(ex).forEach(function(k){msg+='  • '+exN[k]+' — '+fmt(ex[k])+'\n';});}
+  if(total){msg+='\n*Total:* '+fmt(total)+'\n';msg+='*À vista:* '+fmt(Math.round(total*0.9))+' (10% off)\n';}
+  msg+='\nGostaria de mais informações!';
+  window.open('https://wa.me/5543996607506?text='+encodeURIComponent(msg),'_blank');
+}
+</script>
+</body>
+</html>
