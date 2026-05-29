@@ -3,8 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LDB Filmes</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+
+<!-- ═══════ SEO ═══════ -->
+<title>LDB Filmes — Videomaker de Casamento em Londrina | Cinematografia Autoral</title>
+<meta name="description" content="LDB Filmes é uma produtora de cinematografia de casamento em Londrina. Filmamos com olhar autoral, narrativa cinematográfica e o compromisso de eternizar cada história de amor.">
+<meta name="keywords" content="videomaker casamento londrina, filmagem casamento londrina, cinematografia casamento, filme de casamento, sameday edit, teaser casamento, vídeo pré-casamento, LDB Filmes, videomaker paraná">
+<meta name="author" content="LDB Filmes">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ldbfilmes.com/">
+
+<!-- Open Graph (compartilhamento em redes sociais) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ldbfilmes.com/">
+<meta property="og:title" content="LDB Filmes — Cinematografia de Casamento em Londrina">
+<meta property="og:description" content="Eternizando histórias de amor com olhar autoral. Videomaker de casamento em Londrina e região.">
+<meta property="og:image" content="https://ldbfilmes.com/preview.png">
+<meta property="og:image:width" content="2000">
+<meta property="og:image:height" content="1000">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="LDB Filmes">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LDB Filmes — Cinematografia de Casamento em Londrina">
+<meta name="twitter:description" content="Eternizando histórias de amor com olhar autoral.">
+<meta name="twitter:image" content="https://ldbfilmes.com/preview.png">
+
+<!-- Dados estruturados Schema.org — ajuda o Google a entender que você é uma empresa local de videografia -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://ldbfilmes.com",
+  "name": "LDB Filmes",
+  "description": "Produtora de cinematografia de casamento em Londrina, Paraná. Vídeo pré-casamento, teaser, filme completo e sameday edit.",
+  "url": "https://ldbfilmes.com",
+  "telephone": "+5543996607506",
+  "priceRange": "R$ 5.000 - R$ 10.000",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Londrina",
+    "addressRegion": "PR",
+    "addressCountry": "BR"
+  },
+  "areaServed": [
+    {"@type": "City", "name": "Londrina"},
+    {"@type": "State", "name": "Paraná"},
+    {"@type": "Country", "name": "Brasil"}
+  ],
+  "serviceType": ["Videomaker de Casamento", "Cinematografia de Casamento", "Filmagem de Casamento", "Sameday Edit"],
+  "sameAs": [
+    "https://www.instagram.com/ldbfilmes"
+  ]
+}
+</script>
+
+<!-- ═══════ GOOGLE ANALYTICS ═══════ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GPBRD4L1NS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GPBRD4L1NS');
+</script>
+
+<!-- Favicon (ícone na aba do navegador) -->
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -26,6 +91,61 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; animation: fadeIn 0.5s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* LOGO recriada em texto puro */
+.logo-bold {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.logo-thin {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* Logo grande no hero */
+.hero-logo {
+  font-size: clamp(56px, 13vw, 180px) !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: baseline;
+  gap: 0;
+  justify-content: flex-start;
+}
+.hero-logo .logo-bold {
+  font-size: 1em;
+  color: var(--text);
+}
+.hero-logo .logo-thin {
+  font-size: 0.5em;
+  color: var(--text);
+  margin-left: 0.05em;
+  letter-spacing: 0.02em;
+  font-weight: 200;
+  position: relative;
+  top: -0.1em;
+}
+
+/* Logo no nav */
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  color: white !important;
+}
+.nav-logo .logo-bold {
+  font-size: 18px;
+  color: white;
+  font-style: normal !important;
+}
+.nav-logo .logo-thin {
+  font-size: 11px;
+  color: white;
+  margin-left: 2px;
+  letter-spacing: 0.05em;
+}
 
 /* HERO */
 .hero { padding: 140px 32px 40px; max-width: 1400px; margin: 0 auto; }
@@ -229,6 +349,140 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .sec-label:first-child { margin-top: 0; }
 
 .pkg-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+
+/* ═══════ TABELA COMPARATIVA ═══════ */
+.compare-table {
+  background: white;
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  margin-bottom: 56px;
+}
+.compare-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+}
+.compare-table thead th {
+  padding: 24px 18px 8px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text);
+  border-bottom: none;
+  background: transparent;
+}
+.compare-table thead th:first-child { text-align: left; }
+.compare-table .price-row th {
+  padding: 2px 18px 22px;
+  font-size: 13px;
+  color: var(--gold, var(--muted));
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  border-bottom: 1px solid var(--line);
+}
+.compare-table thead th.popular {
+  background: #FBF9F3;
+  position: relative;
+}
+.compare-table thead th.popular::before {
+  content: 'MAIS ESCOLHIDO';
+  position: absolute;
+  top: 6px;
+  left: 0; right: 0;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+.compare-table thead th.popular { padding-top: 28px; }
+.compare-table tbody td {
+  padding: 16px 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--text);
+  vertical-align: middle;
+}
+.compare-table tbody tr:last-child td { border-bottom: none; }
+.compare-table tbody td.feat {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text);
+}
+.compare-table tbody td.feat span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+.compare-table tbody td.popular {
+  background: #FBF9F3;
+  font-weight: 500;
+}
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.dot-on { background: var(--text); }
+.dot-off { background: none; color: var(--line); font-size: 14px; width: auto; height: auto; }
+
+/* Colunas clicáveis — hover e selected por coluna inteira */
+.compare-table table { position: relative; }
+
+/* Overlay de coluna via ::before em col */
+.col-hover { background: #F4F2EC; }
+.col-selected { background: #EDE9DC !important; }
+
+/* Células das colunas dos pacotes */
+.pkg-col { transition: background 0.18s; position: relative; }
+.pkg-col.col-hover { background: #F4F2EC; }
+.pkg-col.col-selected { background: #EDE9DC !important; }
+.compare-table .pkg-col.popular.col-hover { background: #F0ECE0 !important; }
+.compare-table .pkg-col.popular.col-selected { background: #E8E2CC !important; }
+
+/* Cursor só no cabeçalho — deixa claro que é clicável */
+.compare-table thead .pkg-col { cursor: pointer; }
+.compare-table thead .pkg-col:hover .pkg-col-name { text-decoration: underline; text-underline-offset: 4px; }
+
+.check-mini {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--text);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin: 6px auto 0;
+}
+.check-mini svg { width: 9px; height: 9px; }
+.pkg-col.col-selected .check-mini { display: flex; }
+
+.pkg-col-name { line-height: 1; font-size: 24px; }
+
+/* Hint embaixo da tabela */
+.compare-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  padding: 14px;
+  background: #FAFAF7;
+  border-top: 1px solid var(--line);
+}
+.compare-hint strong { color: var(--text); font-weight: 500; }
+
+@media (max-width: 720px) {
+  .compare-table { font-size: 12px; }
+  .compare-table thead th { font-size: 18px; padding: 18px 10px 6px; }
+  .compare-table thead th.popular::before { font-size: 8px; }
+  .compare-table tbody td { padding: 12px 10px; font-size: 12px; }
+  .compare-table tbody td.feat span { font-size: 10px; }
+}
 .pkg-card { background: white; border: 1px solid var(--line); padding: 32px 26px; cursor: pointer; transition: border-color 0.2s, transform 0.2s; position: relative; }
 .pkg-card:hover { border-color: var(--text); transform: translateY(-2px); }
 .pkg-card.sel { border-color: var(--text); border-width: 1.5px; background: #F4F2EC; }
@@ -287,13 +541,71 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   .pkg-cards { grid-template-columns: 1fr; }
   .lightbox { padding: 20px; }
   .lightbox-close { top: -36px; }
+  .stats-grid { grid-template-columns: 1fr !important; gap: 40px 20px !important; }
+}
+
+/* ═══════ ANIMAÇÕES DE SCROLL ═══════ */
+
+/* Reveal padrão (fade + slide up) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal].in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Parallax sutil */
+[data-parallax] .video-bg { transition: transform 0.1s linear; }
+
+/* Reveal por palavra (poema) */
+[data-reveal-words] .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal-words].in-view .word { opacity: 1; transform: translateY(0); }
+
+/* ═══════ STATS ═══════ */
+.stats-section {
+  padding: 100px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.stat-item {
+  text-align: center;
+  padding: 20px 12px;
+}
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="nav-logo">LDB Filmes</div>
+  <div class="nav-logo"><span class="logo-bold">LDB</span><span class="logo-thin">FILMES</span></div>
   <div class="nav-tabs">
     <div class="nav-tab active" onclick="goPage('portfolio')">Portfólio</div>
     <div class="nav-tab" onclick="goPage('proposta')">Proposta</div>
@@ -319,8 +631,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 <div class="page active" id="page-portfolio">
 
   <section class="hero">
-    <h1 class="hero-headline">LDB <em>Filmes</em></h1>
-    <p class="hero-sub">
+    <h1 class="hero-headline hero-logo"><span class="logo-bold">LDB</span><span class="logo-thin">FILMES</span></h1>
+    <p class="hero-sub" data-reveal-words>
       <span>Eram dois caminhos, diferentes em tudo — menos na direção.</span>
       <span>Aos poucos, foram afinando o passo, descobrindo que amar também é ajustar o compasso.</span>
       <span>Porque toda história de amor é, no fundo, uma dança entre dois mundos que aprendem a coexistir.</span>
@@ -329,14 +641,14 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   </section>
 
   <section class="work-section">
-    <div class="work-label">
+    <div class="work-label" data-reveal>
       <span>Trabalhos selecionados</span>
       <span>4 projetos</span>
     </div>
 
     <div class="work-grid">
 
-      <div class="work-item" onclick="openLightbox('1179569982')">
+      <div class="work-item" onclick="openLightbox('1179569982')" data-reveal data-parallax>
         <div class="video-bg">
           <iframe src="https://player.vimeo.com/video/1179569982?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
         </div>
@@ -351,7 +663,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         </div>
       </div>
 
-      <div class="work-item" onclick="openLightbox('1156957347')">
+      <div class="work-item" onclick="openLightbox('1156957347')" data-reveal data-parallax>
         <div class="video-bg">
           <iframe src="https://player.vimeo.com/video/1156957347?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
         </div>
@@ -366,7 +678,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         </div>
       </div>
 
-      <div class="work-item" onclick="openLightbox('1161886240')">
+      <div class="work-item" onclick="openLightbox('1161886240')" data-reveal data-parallax>
         <div class="video-bg">
           <iframe src="https://player.vimeo.com/video/1161886240?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
         </div>
@@ -381,9 +693,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         </div>
       </div>
 
-      <div class="work-item" onclick="openLightbox('1172689760')">
+      <div class="work-item" onclick="openLightbox('1196356526')" data-reveal data-parallax>
         <div class="video-bg">
-          <iframe src="https://player.vimeo.com/video/1172689760?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
+          <iframe src="https://player.vimeo.com/video/1196356526?background=1&autoplay=1&loop=1&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
         </div>
         <div class="play-circle">
           <svg viewBox="0 0 22 22" fill="none"><polygon points="6,3 18,11 6,19" fill="#0A0A0A"/></svg>
@@ -399,7 +711,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
     </div>
   </section>
 
-  <section class="intro-section">
+  <section class="intro-section" data-reveal>
     <div class="intro-grid">
       <div class="intro-label">Sobre — Lucas</div>
       <p class="intro-text">
@@ -408,7 +720,24 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
     </div>
   </section>
 
-  <section class="cta-section">
+  <section class="stats-section" data-reveal>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" data-target="200">0</div>
+        <div class="stat-label">Casamentos filmados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="8">0</div>
+        <div class="stat-label">Anos de história</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="50">0</div>
+        <div class="stat-label">Cidades atendidas</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" data-reveal>
     <h2 class="cta-headline">Vamos <em>conversar</em><br>sobre o seu dia.</h2>
     <button class="cta-btn" onclick="goPage('proposta')">
       Ver planos de investimento
@@ -432,49 +761,72 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
   <div class="prop-wrap">
 
-    <div class="sec-label">Pacotes</div>
-
-    <div class="pkg-cards">
-
-      <div class="pkg-card" id="video-1" onclick="selVideo(1)">
-        <div class="check-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pkg-badge">Referência</div>
-        <div class="pkg-name">Lumiere</div>
-        <div class="pkg-price">R$ 5.000</div>
-        <div class="pkg-vcols">
-          <div><div class="pkg-vcol-head">Teaser</div><div class="pkg-vcol-val">até 2 min</div></div>
-          <div><div class="pkg-vcol-head">Film</div><div class="pkg-vcol-val">6–15 min</div></div>
-        </div>
-        <ul class="pkg-items"><li>2 videomakers</li><li>até 8 horas</li></ul>
-      </div>
-
-      <div class="pkg-card" id="video-2" onclick="selVideo(2)">
-        <div class="check-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pkg-badge">Mais escolhido</div>
-        <div class="pkg-name">Copolla</div>
-        <div class="pkg-price">R$ 5.800</div>
-        <div class="pkg-vcols pkg-vcols-3">
-          <div><div class="pkg-vcol-head">Teaser</div><div class="pkg-vcol-val">até 2 min</div></div>
-          <div><div class="pkg-vcol-head">Film</div><div class="pkg-vcol-val">6–15 min</div></div>
-          <div><div class="pkg-vcol-head">Pré</div><div class="pkg-vcol-val">1–3 min</div></div>
-        </div>
-        <ul class="pkg-items"><li>2 videomakers</li><li>até 9 horas</li></ul>
-      </div>
-
-      <div class="pkg-card" id="video-3" onclick="selVideo(3)">
-        <div class="check-icon"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="pkg-badge">Premium</div>
-        <div class="pkg-name">Villeneuve</div>
-        <div class="pkg-price">R$ 7.000</div>
-        <div class="pkg-vcols pkg-vcols-2x2">
-          <div><div class="pkg-vcol-head">Teaser</div><div class="pkg-vcol-val">até 2 min</div></div>
-          <div><div class="pkg-vcol-head">Film</div><div class="pkg-vcol-val">6–15 min</div></div>
-          <div><div class="pkg-vcol-head">Pré</div><div class="pkg-vcol-val">1–3 min</div></div>
-          <div><div class="pkg-vcol-head">Sameday</div><div class="pkg-vcol-val">no evento</div></div>
-        </div>
-        <ul class="pkg-items"><li>2 videomakers</li><li>até 9 horas</li></ul>
-      </div>
-
+    <div class="sec-label">Escolha seu pacote</div>
+    <div class="compare-table">
+      <table id="compare-tbl">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="pkg-col" data-pkg="1">
+              <div class="pkg-col-name">Lumiere</div>
+              <div class="check-mini"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </th>
+            <th class="pkg-col popular" data-pkg="2">
+              <div class="pkg-col-name">Copolla</div>
+              <div class="check-mini"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </th>
+            <th class="pkg-col" data-pkg="3">
+              <div class="pkg-col-name">Villeneuve</div>
+              <div class="check-mini"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </th>
+          </tr>
+          <tr class="price-row">
+            <th></th>
+            <th class="pkg-col" data-pkg="1">R$ 5.000</th>
+            <th class="pkg-col popular" data-pkg="2">R$ 5.800</th>
+            <th class="pkg-col" data-pkg="3">R$ 7.000</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feat">Teaser <span>até 2 min</span></td>
+            <td class="pkg-col" data-pkg="1"><span class="dot dot-on"></span></td>
+            <td class="pkg-col popular" data-pkg="2"><span class="dot dot-on"></span></td>
+            <td class="pkg-col" data-pkg="3"><span class="dot dot-on"></span></td>
+          </tr>
+          <tr>
+            <td class="feat">Filme completo <span>6–15 min</span></td>
+            <td class="pkg-col" data-pkg="1"><span class="dot dot-on"></span></td>
+            <td class="pkg-col popular" data-pkg="2"><span class="dot dot-on"></span></td>
+            <td class="pkg-col" data-pkg="3"><span class="dot dot-on"></span></td>
+          </tr>
+          <tr>
+            <td class="feat">Vídeo pré-casamento <span>1–3 min</span></td>
+            <td class="pkg-col" data-pkg="1"><span class="dot dot-off">—</span></td>
+            <td class="pkg-col popular" data-pkg="2"><span class="dot dot-on"></span></td>
+            <td class="pkg-col" data-pkg="3"><span class="dot dot-on"></span></td>
+          </tr>
+          <tr>
+            <td class="feat">Sameday Edit <span>no evento</span></td>
+            <td class="pkg-col" data-pkg="1"><span class="dot dot-off">—</span></td>
+            <td class="pkg-col popular" data-pkg="2"><span class="dot dot-off">—</span></td>
+            <td class="pkg-col" data-pkg="3"><span class="dot dot-on"></span></td>
+          </tr>
+          <tr>
+            <td class="feat">Profissionais</td>
+            <td class="pkg-col" data-pkg="1">2 videomakers</td>
+            <td class="pkg-col popular" data-pkg="2">2 videomakers</td>
+            <td class="pkg-col" data-pkg="3">2 videomakers</td>
+          </tr>
+          <tr>
+            <td class="feat">Horas de cobertura</td>
+            <td class="pkg-col" data-pkg="1">até 8h</td>
+            <td class="pkg-col popular" data-pkg="2">até 9h</td>
+            <td class="pkg-col" data-pkg="3">até 9h</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="compare-hint">Clique em um pacote para selecioná-lo.</p>
     </div>
 
     <div class="sec-label">Adicionais</div>
@@ -524,6 +876,81 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 </div>
 
 <script>
+// ═══════ ANIMAÇÕES DE SCROLL ═══════
+
+// 1. Quebrar poema em palavras para reveal sequencial
+document.querySelectorAll('[data-reveal-words]').forEach(function(el){
+  el.querySelectorAll('span').forEach(function(line){
+    var text = line.innerHTML;
+    var hasItalic = line.querySelector('em');
+    if(hasItalic){
+      // mantém o <em> como uma palavra só
+      line.innerHTML = '<span class="word"><em>'+line.querySelector('em').textContent+'</em></span>';
+    } else {
+      var words = text.split(' ');
+      line.innerHTML = words.map(function(w){ return '<span class="word">'+w+'</span>'; }).join(' ');
+    }
+  });
+  // delay sequencial nas palavras
+  el.querySelectorAll('.word').forEach(function(w, i){
+    w.style.transitionDelay = (i * 0.04) + 's';
+  });
+});
+
+// 2. Intersection Observer — reveal ao entrar na tela
+var revealObserver = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      // dispara contadores se for stats
+      if(entry.target.classList.contains('stats-section')){
+        animateCounters();
+      }
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('[data-reveal], [data-reveal-words]').forEach(function(el){
+  revealObserver.observe(el);
+});
+
+// 3. Contadores animados
+function animateCounters(){
+  document.querySelectorAll('.stat-number').forEach(function(el){
+    var target = parseInt(el.dataset.target);
+    var suffix = el.dataset.suffix || '';
+    var duration = 1800;
+    var start = performance.now();
+    function step(now){
+      var progress = Math.min((now - start) / duration, 1);
+      // ease-out
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var value = Math.floor(target * eased);
+      el.textContent = value + (target === 200 ? '+' : '') + suffix;
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// 4. Parallax sutil nos vídeos do grid
+var parallaxItems = document.querySelectorAll('[data-parallax]');
+function updateParallax(){
+  parallaxItems.forEach(function(item){
+    var rect = item.getBoundingClientRect();
+    var windowHeight = window.innerHeight;
+    if(rect.bottom < 0 || rect.top > windowHeight) return;
+    var center = rect.top + rect.height / 2;
+    var offset = (center - windowHeight / 2) / windowHeight;
+    var translate = offset * -25; // intensidade do parallax
+    var bg = item.querySelector('.video-bg');
+    if(bg) bg.style.transform = 'translate(-50%, calc(-50% + '+translate+'px))';
+  });
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+updateParallax();
+
 function goPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
@@ -550,7 +977,7 @@ var videoData = {
     title: 'Sameday Edit',
     desc: 'O seu casamento editado e exibido ainda durante a festa. O Sameday Edit é produzido no mesmo dia do evento e projetado para os convidados enquanto a celebração acontece. Um momento de pura surpresa — e uma das memórias mais marcantes que o seu casamento pode ter.'
   },
-  '1172689760': {
+  '1196356526': {
     meta: 'Filme completo · 06–15min',
     title: 'Filme <em>· história completa</em>',
     desc: 'O filme é a memória completa do seu casamento. Do nervosismo da preparação à última música da festa, cada capítulo do seu dia é narrado com cuidado e poesia. É o vídeo que vocês vão assistir juntos daqui a 20 anos e sentir tudo de novo.'
@@ -587,7 +1014,35 @@ var vP=[0,5000,5800,7000];
 var vN=['','Lumiere','Copolla','Villeneuve'];
 var ex={};
 var exN={sameday:'Sameday Edit',integra:'Íntegra',prof:'Profissional extra'};
-function selVideo(n){vSel=vSel===n?0:n;[1,2,3].forEach(function(i){document.getElementById('video-'+i).classList.toggle('sel',vSel===i);});upd();}
+function selVideo(n){
+  vSel=vSel===n?0:n;
+  document.querySelectorAll('.pkg-col').forEach(function(c){
+    var pkg = parseInt(c.dataset.pkg);
+    c.classList.toggle('col-selected', pkg === vSel);
+  });
+  upd();
+}
+
+// Hover por coluna inteira
+(function(){
+  function getCells(pkg){
+    return document.querySelectorAll('.pkg-col[data-pkg="'+pkg+'"]');
+  }
+  [1,2,3].forEach(function(pkg){
+    getCells(pkg).forEach(function(cell){
+      cell.style.cursor = 'pointer';
+      cell.addEventListener('mouseenter', function(){
+        getCells(pkg).forEach(function(c){ c.classList.add('col-hover'); });
+      });
+      cell.addEventListener('mouseleave', function(){
+        getCells(pkg).forEach(function(c){ c.classList.remove('col-hover'); });
+      });
+      cell.addEventListener('click', function(){
+        selVideo(pkg);
+      });
+    });
+  });
+})();
 function togEx(k,v){if(ex[k]){delete ex[k];document.getElementById('t-'+k).classList.remove('on');}else{ex[k]=v;document.getElementById('t-'+k).classList.add('on');}upd();}
 function fmt(n){return 'R$ '+n.toLocaleString('pt-BR');}
 function upd(){
